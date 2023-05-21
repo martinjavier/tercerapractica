@@ -27,8 +27,4 @@ authRouter.get("/failure-login", failLogin);
 
 authRouter.get("/logout", logoutController);
 
-authRouter.get("/current", async (req, res) => {
-  res.redirect("/current");
-});
-
 export default authRouter;

@@ -7,7 +7,6 @@ const cartsRouter = Router();
 const cartsFileRouter = Router();
 cartsRouter.use(json());
 
-const productManager = new ProductManager(ProductModel);
 const productsRouter = Router();
 productsRouter.use(json());
 

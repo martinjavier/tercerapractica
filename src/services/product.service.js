@@ -1,26 +1,84 @@
 import { ProductManager, ProductModel } from "../dao/factory.js";
 
-const productManager = new ProductManager(ProductModel);
+export const createProduct = (product) => {
+  try {
+    const productAdded = ProductManager.addProduct(product);
+    return productAdded;
+  } catch (error) {
+    return error.message;
+  }
+};
 
+export const getProducts = () => {
+  try {
+    const products = ProductManager.getProducts();
+    return products;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+export const getProductById = (prodId) => {
+  try {
+    const product = ProductManager.getProductById(prodId);
+    return product;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+export const updateProduct = (productId, product) => {
+  try {
+    const updatedProduct = ProductManager.updateProduct(productId, product);
+    return updatedProduct;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+export const deleteProduct = (productId) => {
+  try {
+    const productDeleted = ProductManager.deleteProduct(productId);
+    return productDeleted;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+export const getPaginateProducts = (query, options) => {
+  try {
+    const paginateProducts = ProductModel.paginate(query, options);
+    return paginateProducts;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+/*
 export const createProduct = async (req, res) => {
   try {
     const body = req.body;
+    console.log("BODY: " + body);
     body.status = Boolean(body.status);
+    console.log("Status: " + body.status);
     body.price = Number(body.price);
     body.stock = Number(body.stock);
-    const productAdded = await productManager.addProduct(body);
+    const productAdded = await ProductManager.addProduct(body);
     res.json({
       status: "success",
       result: productAdded,
       message: "product added",
     });
   } catch (error) {
-    res.status(400).json({ status: "error", message: error.message });
+    console.log(error.message);
+    res.json({ status: "error", message: error.message });
   }
   //  const newProduct = productManager.createProduct();
   //  return newProduct;
 };
+*/
 
+/*
 export const getProducts = async (req, res) => {
   try {
     const { limit = 10, page = 1, category, stock, sort = "asc" } = req.query;
@@ -43,7 +101,7 @@ export const getProducts = async (req, res) => {
       }
     }
     // console.log("query: ", query);
-    const result = await productManager.getPaginateProducts(query, {
+    const result = await ProductManager.getPaginateProducts(query, {
       page,
       limit,
       sort: { price: sortValue },
@@ -69,17 +127,14 @@ export const getProducts = async (req, res) => {
         : null,
     });
   } catch (error) {
-    res.status(400).json({ status: "error", message: error.message });
+    res.json({ status: "error", message: error.message });
   }
   //const products = productManager.getProducts();
   //return products;
 };
+*/
 
-export const getProductById = (prodId) => {
-  const prod = productManager.getProductById(prodId);
-  return prod;
-};
-
+/*
 export const updateProduct = async (req, res) => {
   try {
     const productId = req.params.pid;
@@ -88,7 +143,7 @@ export const updateProduct = async (req, res) => {
     body.price = Number(body.price);
     body.stock = Number(body.stock);
     //actualizamos el método, pasándole el id y el body
-    const productUpdated = await productManager.updateProduct(productId, body);
+    const productUpdated = await ProductManager.updateProduct(productId, body);
     res.json({
       status: "success",
       result: productUpdated,
@@ -101,7 +156,9 @@ export const updateProduct = async (req, res) => {
   const update = productManager.findByIdAndUpdate(id, product, { new: true });
   return update;
 };
+*/
 
+/*
 export const getPaginateProducts = async (query = {}, options = {}) => {
   try {
     const result = await ProductModel.paginate(query, options);
@@ -110,16 +167,17 @@ export const getPaginateProducts = async (query = {}, options = {}) => {
     throw new Error(`Error get all ${error}`);
   }
 };
+*/
 
+/*
 export const deleteProduct = async (req, res) => {
   try {
     const productId = req.params.pid;
     //luego eliminamos el producto
-    const productdeleted = await productManager.deleteProduct(productId);
+    const productdeleted = await ProductManager.deleteProduct(productId);
     res.json({ status: "success", result: productdeleted.message });
   } catch (error) {
     res.status(400).json({ message: error });
   }
-  //const prodToDelete = productManager.deleteProduct(prodId);
-  //return prodToDelete;
 };
+*/

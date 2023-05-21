@@ -1,3 +1,8 @@
+import {
+  createProductController,
+  getProductsController,
+} from "../../controllers/products.controller.js";
+
 class ProductManager {
   constructor(model) {
     this.model = model;
@@ -5,19 +10,19 @@ class ProductManager {
 
   async addProduct(product) {
     try {
-      const data = await this.model.create(product);
-      const response = JSON.parse(JSON.stringify(data));
-      return response;
+      const productCreated = await this.model.create(product);
+      //const response = JSON.parse(JSON.stringify(data));
+      return productCreated;
     } catch (error) {
-      throw new Error(`Error al guardar: ${error}`);
+      throw new Error(`Error al guardar: ${error.message}`);
     }
   }
 
   async getProducts() {
     try {
-      const data = await this.model.find();
-      const response = JSON.parse(JSON.stringify(data));
-      return response;
+      const products = await this.model.find();
+      //const response = JSON.parse(JSON.stringify(data));
+      return products;
     } catch (error) {
       throw new Error(`Error get all ${error}`);
     }

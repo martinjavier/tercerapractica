@@ -8,7 +8,7 @@ import alert from "alert";
 import { isUserAuthenticate } from "../middlewares/validations.js";
 
 const viewsRouter = Router();
-const productManager = new ProductManager(ProductModel);
+//const productManager = new ProductManager(ProductModel);
 const cartManager = new CartManager(CartModel);
 const messageManager = new MessageManager(MessageModel);
 

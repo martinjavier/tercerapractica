@@ -9,8 +9,6 @@ import {
   deleteProductController,
 } from "../controllers/products.controller.js";
 
-const productManager = new ProductManager(ProductModel);
-
 const productsRouter = Router();
 
 productsRouter.get("/", getProductsController);
@@ -18,6 +16,8 @@ productsRouter.get("/:pid", getProductByIdController);
 productsRouter.post("/", checkValidProductFields, createProductController);
 productsRouter.put("/:pid", checkValidProductFields, updateProductController);
 productsRouter.delete("/:pid", deleteProductController);
+
+export default productsRouter;
 
 /*
 productsRouter.get("/", async (req, res) => {
@@ -144,7 +144,7 @@ productsRouter.delete("/:pid", async (req, res) => {
 });
 */
 
-export default productsRouter;
+// export default productsRouter;
 
 /*
 import { Router, json } from "express";

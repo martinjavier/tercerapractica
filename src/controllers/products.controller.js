@@ -4,24 +4,36 @@ import {
   createProduct,
   updateProduct,
   deleteProduct,
+  getPaginateProducts,
 } from "../services/product.service.js";
+
 import { ProductManager, ProductModel } from "../dao/factory.js";
 
-export const getProductsController = (req, res) => {
-  const result = getProducts();
-  res.json({ status: "success", data: result });
+export const getProductsController = async (req, res) => {
+  try {
+    const products = await getProducts();
+    res.json({ status: "success", payload: products });
+  } catch (error) {
+    res.json({ status: "error Controller", message: error.message });
+  }
 };
 
-export const getProductByIdController = (req, res) => {
-  const { pid } = req.params;
-  const result = getProductById(pid);
-  res.json({ status: "success", data: result });
+export const getProductByIdController = async (req, res) => {
+  try {
+    const product = await getProductById(req.params.pid);
+    res.json({ status: "success", payload: product });
+  } catch (error) {
+    res.json({ status: "error", message: error.message });
+  }
 };
 
-export const createProductController = (req, res) => {
-  const body = req.body;
-  const result = createProduct(body);
-  res.json({ status: "success", data: result });
+export const createProductController = async (req, res) => {
+  try {
+    const productCreated = createProduct(req.body);
+    res.json({ status: "success", payload: productCreated });
+  } catch (error) {
+    res.json({ status: "error", message: error.message });
+  }
 };
 
 export const updateProductController = (req, res) => {
@@ -34,5 +46,12 @@ export const updateProductController = (req, res) => {
 export const deleteProductController = (req, res) => {
   const productId = req.params.pid;
   const result = deleteProduct(productId);
+  res.json({ status: "success", data: result });
+};
+
+export const getPaginateProductsController = (req, res) => {
+  const query = req.params.query;
+  const options = req.params.options;
+  const result = getPaginateProducts(query, options);
   res.json({ status: "success", data: result });
 };

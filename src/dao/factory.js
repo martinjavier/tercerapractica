@@ -34,7 +34,7 @@ if (persistence === "mongo") {
   CartManager = DbCartManager;
   ProductManager = new DbProductManager(DbProductModel);
   MessageManager = DbMessageManager;
-  UserManager = DbUserManager;
+  UserManager = new DbUserManager(DbUserModel);
   ProductModel = DbProductModel;
   CartModel = DbCartModel;
   MessageModel = DbMessageModel;

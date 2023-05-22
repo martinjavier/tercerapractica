@@ -1,6 +1,8 @@
 import { Router } from "express";
-import { ProductManager, ProductModel } from "../dao/factory.js";
-import { checkValidProductFields } from "../middlewares/validations.js";
+import {
+  checkValidProductFields,
+  isUserAuthenticate,
+} from "../middlewares/validations.js";
 import {
   getProductsController,
   getProductByIdController,

@@ -1,7 +1,6 @@
 import { Router, json } from "express";
-import { MessageManager, MessageModel } from "../dao/factory.js";
+import { MessageManager } from "../dao/factory.js";
 
-const messageManager = new MessageManager(MessageModel);
 const messageRouter = Router();
 messageRouter.use(json());
 

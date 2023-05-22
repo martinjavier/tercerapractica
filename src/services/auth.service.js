@@ -1,15 +1,13 @@
-import { UserManager, UserModel } from "../dao/factory.js";
+import { UserManager } from "../dao/factory.js";
 import alert from "alert";
 import jwt from "jsonwebtoken";
 import { options } from "../config/options.js";
 import { isValidPassword, createHash } from "../utils.js";
 
-const userManager = new UserManager(UserModel);
-
 export const signup = async (req, res) => {
   try {
     const { first_name, last_name, email, age, password } = req.body;
-    const user = await userManager.getUserByEmail(email);
+    const user = await UserManager.getUserByEmail(email);
     if (!user) {
       let role = "user";
       if (email.endsWith("@coder.com")) {
@@ -23,7 +21,7 @@ export const signup = async (req, res) => {
         password: createHash(password),
         role,
       };
-      const userCreated = await userManager.addUser(newUser);
+      const userCreated = await UserManager.addUser(newUser);
       const token = jwt.sign(
         {
           _id: userCreated._id,
@@ -52,7 +50,7 @@ export const login = async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   try {
-    const user = await userManager.getUserByEmail(email);
+    const user = await UserManager.getUserByEmail(email);
     if (user) {
       if (isValidPassword(user, password)) {
         const token = jwt.sign(

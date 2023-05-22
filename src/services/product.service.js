@@ -9,9 +9,16 @@ export const createProduct = (product) => {
   }
 };
 
-export const getProducts = () => {
+export const getProducts = (page, limit, sort, title, description, stock) => {
   try {
-    const products = ProductManager.getProducts();
+    const products = ProductManager.getProducts(
+      page,
+      limit,
+      sort,
+      title,
+      description,
+      stock
+    );
     return products;
   } catch (error) {
     return error.message;

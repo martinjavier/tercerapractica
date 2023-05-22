@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { CartManager, CartModel } from "../dao/factory.js";
-import { ProductManager, ProductModel } from "../dao/factory.js";
+import { ProductManager } from "../dao/factory.js";
 import { MessageManager, MessageModel } from "../dao/factory.js";
 import { UserManager, UserModel } from "../dao/factory.js";
 import passport from "passport";
@@ -10,7 +10,7 @@ import { isUserAuthenticate } from "../middlewares/validations.js";
 const viewsRouter = Router();
 //const productManager = new ProductManager(ProductModel);
 const cartManager = new CartManager(CartModel);
-const messageManager = new MessageManager(MessageModel);
+//const messageManager = new MessageManager(MessageModel);
 
 let products = [];
 
@@ -96,7 +96,7 @@ viewsRouter.get(
           }
         }
       }
-      const result = await productManager.getPaginateProducts(query, {
+      const result = await ProductManager.getPaginateProducts(query, {
         page,
         limit,
         sort: { price: sortValue },
@@ -136,15 +136,16 @@ viewsRouter.get(
 
 viewsRouter.get("/product/:id", async (req, res) => {
   let prodId = req.params.id;
-  let product = await productManager.getOneProd(prodId);
-  res.render("oneproduct", { product: product });
+  let product = await ProductManager.getProductById(prodId);
+  //res.render("oneproduct", { product: product });
+  res.render("oneproduct", product);
 });
 
 viewsRouter.get("/cart/:cid", async (req, res) => {
   try {
     let cartId = req.params.cid;
-    let carts = await cartManager.getOneCart(cartId);
-    res.render("onecart", { cart: carts });
+    let cart = await cartManager.getOneCart(cartId);
+    res.render("onecart", cart);
   } catch (error) {
     res.send(`<div>Was an error loading this view</div>`);
   }

@@ -7,8 +7,6 @@ import {
   getPaginateProducts,
 } from "../services/product.service.js";
 
-import { ProductManager, ProductModel } from "../dao/factory.js";
-
 export const getProductsController = async (req, res) => {
   try {
     const products = await getProducts();

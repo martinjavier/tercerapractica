@@ -4,18 +4,17 @@
   </div>
   <div id="oneproduct"></div>
   <div>
-    {{#each product}}
-      <h3>ID {{_id}}</h3>
-      <h3>TITLE {{title}}</h3>
-      <h3>DESCRIPTION {{description}}</h3>
-      <h3>CODE {{code}}</h3>
-      <h3>PRICE {{price}}</h3>
-      <h3>STATUS {{status}}</h3>
-      <h3>STOCK {{stock}}</h3>
-      <h3>CATEGORY {{category}}</h3>
-      <h3>THUMBNAILS {{thumbnails}}</h3>
-    {{/each}}
+    <h6>ID {{_id}}</h5>
+    <h6>TITLE {{title}}</h5>
+    <h6>DESCRIPTION {{description}}</h5>
+    <h6>CODE {{code}}</h5>
+    <h6>PRICE {{price}}</h5>
+    <h6>STATUS {{status}}</h5>
+    <h6>STOCK {{stock}}</h5>
+    <h6>CATEGORY {{category}}</h5>
+    <h6>THUMBNAILS {{thumbnails}}</h5>
   </div>
+  <input type="button" value="Go back!" onclick="history.back()" />
 </div>
 
 <script src="/socket.io/socket.io.js"></script>

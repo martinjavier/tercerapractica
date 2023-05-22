@@ -1,8 +1,3 @@
-import {
-  createProductController,
-  getProductsController,
-} from "../../controllers/products.controller.js";
-
 class ProductManager {
   constructor(model) {
     this.model = model;
@@ -18,10 +13,55 @@ class ProductManager {
     }
   }
 
-  async getProducts() {
+  async getProducts(page, limit, sort, title, description, stock) {
     try {
-      const products = await this.model.find();
-      //const response = JSON.parse(JSON.stringify(data));
+      if (limit === undefined) {
+        limit = 10;
+      } else {
+        limit = limit;
+      }
+      if (page === undefined) {
+        page = 1;
+      } else {
+        page = page;
+      }
+      if (sort === "asc") {
+        sort = { price: 1 };
+      } else if (sort === "desc") {
+        sort = { price: -1 };
+      } else {
+        sort = null;
+      }
+
+      let array = {};
+
+      if (title && !description && !stock) {
+        array = { title: title };
+      } else if (!title && !description && stock) {
+        array = { stock: stock };
+      } else if (!title && description && !stock) {
+        array = { description: description };
+      } else if (title && description && !stock) {
+        array = { title: title, description: description };
+      } else if (title && description && stock) {
+        array = { title: title, description: description, stock: stock };
+      } else if (title && !description && stock) {
+        array = { title: title, stock: stock };
+      } else if (!title && description && stock) {
+        array = { description: description, stock: stock };
+      } else {
+        array = {};
+      }
+
+      let query = array;
+
+      const products = await this.model.paginate(query, {
+        limit: limit,
+        lean: true,
+        page: page ?? 1,
+        sort: sort,
+      });
+
       return products;
     } catch (error) {
       throw new Error(`Error get all ${error}`);
@@ -37,6 +77,7 @@ class ProductManager {
     }
   }
 
+  // POSTMAN GET http://localhost:8080/api/products/64266458ef82d358d9ac3ea4
   async getProductById(id) {
     try {
       //Comprobación de la estructura y validez del Id de producto recibido por parámetro

@@ -4,11 +4,9 @@
   </div>
   <div id="onecart"></div>
   <div>
-    {{#each cart}}
-      <h2>Card ID {{_id}}</h2>
-      {{#each products}}
-        <h3>{{@key}}: {{this}} {{@quantity}}</h3>
-      {{/each}}
+    <h2>Card ID {{_id}}</h2>
+    {{#each products}}
+      <h3>{{@key}}: {{this}} {{@quantity}}</h3>
     {{/each}}
   </div>
 </div>

@@ -1,2 +1,1 @@
-# segundapractica
 # Tercera Práctica

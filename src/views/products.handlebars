@@ -6,7 +6,7 @@
   {{#each payload}}
     <ul>
       <li> {{this.title}} - Price: {{this.price}}</li>
-      <a href="/products/{{this._id}}">View Details</a>
+      <a href="/product/{{this._id}}">View Details</a>
       <button onclick="addToCart(`{{this._id}}`)">Add To Cart</button>
     </ul>
   {{/each}}

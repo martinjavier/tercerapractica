@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { UserManager, UserModel } from "../dao/factory.js";
 import passport from "passport";
 import alert from "alert";
 import jwt from "jsonwebtoken";
@@ -8,7 +7,6 @@ import { signup, login } from "../services/auth.service.js";
 import { isValidPassword, createHash } from "../utils.js";
 
 const authRouter = Router();
-const userManager = new UserManager(UserModel);
 
 export const loginController = async (req, res) => {
   const result = login(req, res);

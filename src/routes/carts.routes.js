@@ -1,18 +1,32 @@
 import { Router, json } from "express";
-import { CartManager, CartModel } from "../dao/factory.js";
-import { ProductManager, ProductModel } from "../dao/factory.js";
+import {
+  getCartsController,
+  getCartByIdController,
+  createCartController,
+  deleteCartController,
+  addProductController,
+  purchaseCartController,
+} from "../controllers/carts.controller.js";
 
-const cartsManager = new CartManager(CartModel);
 const cartsRouter = Router();
-const cartsFileRouter = Router();
 cartsRouter.use(json());
 
 const productsRouter = Router();
 productsRouter.use(json());
 
+cartsRouter.get("/", getCartsController);
+cartsRouter.get("/:cid", getCartByIdController);
+cartsRouter.post("/", createCartController);
+cartsRouter.put("/:cid/product/:pid", addProductController);
+cartsRouter.delete("/:cid", deleteCartController);
+cartsRouter.put("/:cid/purchase", purchaseCartController);
+
+export default cartsRouter;
+
+/*
 // Postman GET http://localhost:8080/api/carts => Todos los carritos
 cartsRouter.get("/", async (req, res) => {
-  const cart = await cartsManager.getCarts();
+  const cart = await CartManager.getCarts();
   res.send(cart);
 });
 
@@ -21,21 +35,21 @@ cartsRouter.get("/", async (req, res) => {
 cartsRouter.post("/", async (req, res) => {
   const { products } = req.body;
   console.log(products);
-  const result = await cartsManager.create({ products });
+  const result = await CartManager.create({ products });
   res.status(201).send({ status: "ok", payload: result });
 });
 
 // Postman DELETE http://localhost:8080/api/carts/642660d39cd3ec80e43f50ab
 cartsRouter.delete("/:id", async (req, res) => {
   const { cartId } = req.params;
-  const carts = await cartsManager.delete(cartId);
+  const carts = await CartManager.delete(cartId);
   res.send(carts);
 });
 
 // Postman GET http://localhost:8080/api/carts/642c52b03c49ee17a8574a02
 cartsRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
-  const cart = await cartsManager.getOneCart(id);
+  const cart = await CartManager.getOneCart(id);
   res.send(cart);
 });
 
@@ -43,16 +57,19 @@ cartsRouter.get("/:id", async (req, res) => {
 cartsRouter.delete("/:cId/product/:pId", async (req, res) => {
   const { cId } = req.params;
   const { pId } = req.params;
-  const prodToDel = await cartsManager.deleteProd(cId, pId);
+  const prodToDel = await CartManager.deleteProd(cId, pId);
   res.send(prodToDel);
 });
 
 cartsRouter.put("/:cId/product/:pId", async (req, res) => {
   const { cId } = req.params;
   const { pId } = req.params;
-  const prodToUpdate = await cartsManager.updateProductIntoCart(cId, pId);
+  const prodToUpdate = await CartManager.updateProductIntoCart(cId, pId);
   res.status(201).send({ status: "ok", payload: prodToUpdate });
 });
+
+export default cartsRouter;
+*/
 
 /* cartsFileRouter
 
@@ -187,5 +204,3 @@ cartsFileRouter.delete("/:cid/product/:pid", async (req, res) => {
   }
 });
 */
-
-export default cartsRouter;

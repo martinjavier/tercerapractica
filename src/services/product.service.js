@@ -1,4 +1,4 @@
-import { ProductManager, ProductModel } from "../dao/factory.js";
+import { ProductManager } from "../dao/factory.js";
 
 export const createProduct = (product) => {
   try {
@@ -54,7 +54,7 @@ export const deleteProduct = (productId) => {
 
 export const getPaginateProducts = (query, options) => {
   try {
-    const paginateProducts = ProductModel.paginate(query, options);
+    const paginateProducts = ProductManager.getPaginateProducts(query, options);
     return paginateProducts;
   } catch (error) {
     return error.message;

@@ -31,7 +31,7 @@ let CartManager,
   UserModel;
 
 if (persistence === "mongo") {
-  CartManager = DbCartManager;
+  CartManager = new DbCartManager(DbCartModel);
   ProductManager = new DbProductManager(DbProductModel);
   MessageManager = DbMessageManager;
   UserManager = new DbUserManager(DbUserModel);

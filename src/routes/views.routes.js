@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { CartManager, CartModel } from "../dao/factory.js";
+import { CartManager } from "../dao/factory.js";
 import { ProductManager } from "../dao/factory.js";
 import { MessageManager, MessageModel } from "../dao/factory.js";
 import { UserManager, UserModel } from "../dao/factory.js";
@@ -9,7 +9,7 @@ import { isUserAuthenticate } from "../middlewares/validations.js";
 
 const viewsRouter = Router();
 //const productManager = new ProductManager(ProductModel);
-const cartManager = new CartManager(CartModel);
+
 //const messageManager = new MessageManager(MessageModel);
 
 let products = [];
@@ -144,7 +144,7 @@ viewsRouter.get("/product/:id", async (req, res) => {
 viewsRouter.get("/cart/:cid", async (req, res) => {
   try {
     let cartId = req.params.cid;
-    let cart = await cartManager.getOneCart(cartId);
+    let cart = await CartManager.getOneCart(cartId);
     res.render("onecart", cart);
   } catch (error) {
     res.send(`<div>Was an error loading this view</div>`);
@@ -152,7 +152,7 @@ viewsRouter.get("/cart/:cid", async (req, res) => {
 });
 
 viewsRouter.get("/carts", async (req, res) => {
-  let carts = await cartManager.getCarts();
+  let carts = await CartManager.getCarts();
   res.render("carts", { carts: carts });
 });
 

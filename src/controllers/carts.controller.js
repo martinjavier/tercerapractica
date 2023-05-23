@@ -56,7 +56,9 @@ export const purchaseCartController = async (req, res) => {
     const cartId = req.params.cid;
     console.log("Purchase Cart ID: " + cartId);
     const product = req.body;
-    console.log("Purchase Product: " + JSON.stringify(product));
+    console.log(
+      "Purchase Product Quantity: " + JSON.stringify(product.quantity)
+    );
     const result = cartPurchase(cartId);
     res.json({ status: "success", payload: result });
   } catch (error) {

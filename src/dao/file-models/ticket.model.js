@@ -10,19 +10,19 @@ const ticketSchema = new mongoose.Schema({
     },
     purchase_datetime: {
       type: Date,
-      required: false,
+      required: true,
     },
     amount: {
       type: Number,
-      required: false,
+      required: true,
     },
     purchaser: {
       type: String,
-      required: false,
+      required: true,
     },
   },
 });
 
-const DbTicketModel = mongoose.model(ticketCollection, ticketSchema);
+const FileTicketModel = mongoose.model(ticketCollection, ticketSchema);
 
-export default DbTicketModel;
+export default FileTicketModel;

@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { CartManager } from "../dao/factory.js";
 import { ProductManager } from "../dao/factory.js";
-import { MessageManager, MessageModel } from "../dao/factory.js";
-import { UserManager, UserModel } from "../dao/factory.js";
+import { MessageManager } from "../dao/factory.js";
+import { UserManager } from "../dao/factory.js";
 import passport from "passport";
 import alert from "alert";
 import { isUserAuthenticate } from "../middlewares/validations.js";

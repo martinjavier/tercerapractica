@@ -72,14 +72,9 @@ class CartManager {
         console.log("falta Información");
       } else {
         const cart = await this.model.findById(cartId);
-        /*
-        let prodDeleted = await this.model.updateOne(
-          { _id: cartId },
-          { $pull: { products: { id: prodId } } }
-        );
-        */
-
-        console.log("Stock: " + cart.products);
+        const cartProducts = cart.products;
+        console.log("Stock Prod 1 : " + cartProducts[0].quantity);
+        console.log("ID Prod 1: " + cartProducts[0]._id);
         return cart;
       }
     } catch (err) {

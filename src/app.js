@@ -8,8 +8,9 @@ import productsRouter from "./routes/products.routes.js";
 import cartsRouter from "./routes/carts.routes.js";
 import viewsRouter from "./routes/views.routes.js";
 import authRouter from "./routes/auth.routes.js";
-import messageRouter from "./routes/message.routes.js";
-import userRouter from "./routes/users.routes.js";
+import messagesRouter from "./routes/message.routes.js";
+import usersRouter from "./routes/users.routes.js";
+import ticketsRouter from "./routes/ticket.routes.js";
 // DATABASE
 import { ConnectionDb } from "./config/dbConnection.js";
 import { Server } from "socket.io";
@@ -56,9 +57,10 @@ app.set("views", __dirname + "/views");
 app.use("/", viewsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
-app.use("/api/messages", messageRouter);
+app.use("/api/messages", messagesRouter);
 app.use("/api/sessions", authRouter);
-app.use("/api/users", userRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/tickets", ticketsRouter);
 
 // SOCKET SERVER CONFIG
 

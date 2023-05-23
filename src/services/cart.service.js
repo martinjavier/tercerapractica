@@ -48,7 +48,7 @@ export const deleteCart = (cartId) => {
 export const cartPurchase = (cartId) => {
   try {
     const purchasedCart = CartManager.purchaseCart(cartId);
-    return deletedCart;
+    return purchasedCart;
   } catch (error) {
     return error.message;
   }

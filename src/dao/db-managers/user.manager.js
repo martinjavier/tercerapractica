@@ -19,7 +19,7 @@ class UserManager {
       const response = JSON.parse(JSON.stringify(users));
       return response;
     } catch (error) {
-      throw new Error(`Error getting ussers: ${error.message}`);
+      throw new Error(`Error getting users: ${error.message}`);
     }
   }
 

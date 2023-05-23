@@ -10,8 +10,8 @@ class CartManager {
   };
 
   // POSTMAN POST http://localhost:8080/api/carts { "products": [ { "id": "642c517ccbcc6f6acabf0a54", "quantity": 500 } ] }
-  createCart = async (cart) => {
-    const result = await this.model.create(cart);
+  createCart = async () => {
+    const result = await this.model.create();
     return result;
   };
 

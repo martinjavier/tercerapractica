@@ -5,9 +5,9 @@ class ProductManager {
 
   async addProduct(product) {
     try {
-      const productCreated = await this.model.create(product);
-      //const response = JSON.parse(JSON.stringify(data));
-      return productCreated;
+      const data = await this.model.create(product);
+      const response = JSON.parse(JSON.stringify(data));
+      return response;
     } catch (error) {
       throw new Error(`Error al guardar: ${error.message}`);
     }

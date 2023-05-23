@@ -63,7 +63,6 @@ app.use("/api/users", usersRouter);
 app.use("/api/tickets", ticketsRouter);
 
 // SOCKET SERVER CONFIG
-
 socketServer.on("connection", (socket) => {
   console.log(`New client connected! ${socket.id}`);
 

@@ -73,8 +73,9 @@ class CartManager {
       } else {
         const cart = await this.model.findById(cartId);
         const cartProducts = cart.products;
-        console.log("Stock Prod 1 : " + cartProducts[0].quantity);
+        console.log("Quantity Prod 1 : " + cartProducts[0].quantity);
         console.log("ID Prod 1: " + cartProducts[0]._id);
+
         return cart;
       }
     } catch (err) {

@@ -7,6 +7,8 @@ import {
   cartPurchase,
 } from "../services/cart.service.js";
 
+import { getProductById } from "../services/product.service.js";
+
 export const getCartsController = async (req, res) => {
   try {
     const carts = await getCarts();
@@ -59,6 +61,9 @@ export const purchaseCartController = async (req, res) => {
     console.log(
       "Purchase Product Quantity: " + JSON.stringify(product.quantity)
     );
+    const prod = getProductById(req.body._id);
+    console.log("PROD: " + prod);
+
     const result = cartPurchase(cartId);
     res.json({ status: "success", payload: result });
   } catch (error) {

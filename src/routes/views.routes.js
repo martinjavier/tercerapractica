@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { CartManager } from "../dao/factory.js";
 import { ProductManager } from "../dao/factory.js";
-import { MessageManager } from "../dao/factory.js";
+import { MessageManager, MessageModel } from "../dao/factory.js";
 import { UserManager } from "../dao/factory.js";
 import passport from "passport";
 import alert from "alert";
@@ -10,7 +10,7 @@ import { isUserAuthenticate } from "../middlewares/validations.js";
 const viewsRouter = Router();
 //const productManager = new ProductManager(ProductModel);
 
-//const messageManager = new MessageManager(MessageModel);
+const messageManager = new MessageManager(MessageModel);
 
 let products = [];
 

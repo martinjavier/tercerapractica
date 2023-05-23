@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { checkRole } from "../middlewares/auth.js";
 import {
   checkValidProductFields,
   isUserAuthenticate,
@@ -15,9 +16,9 @@ const productsRouter = Router();
 
 productsRouter.get("/", getProductsController);
 productsRouter.get("/:pid", getProductByIdController);
-productsRouter.post("/", checkValidProductFields, createProductController);
-productsRouter.put("/:pid", checkValidProductFields, updateProductController);
-productsRouter.delete("/:pid", deleteProductController);
+productsRouter.post("/", checkRole(["admin"]), createProductController);
+productsRouter.put("/:pid", checkRole(["admin"]), updateProductController);
+productsRouter.delete("/:pid", checkRole(["admin"]), deleteProductController);
 
 export default productsRouter;
 

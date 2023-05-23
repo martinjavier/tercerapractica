@@ -33,6 +33,16 @@ class UserManager {
     }
   }
 
+  async getUserByEmail(email) {
+    try {
+      const data = await this.model.findOne({ email: email });
+      const response = JSON.parse(JSON.stringify(data));
+      return response;
+    } catch (error) {
+      throw new Error(`Error al obtener usuario: ${error.message}`);
+    }
+  }
+
   async deleteUser(userId) {
     try {
       const data = await this.model.deleteUser({ _id: userId });

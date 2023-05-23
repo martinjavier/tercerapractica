@@ -18,6 +18,7 @@ import { MessageManager, MessageModel } from "../src/dao/factory.js";
 import passport from "passport";
 import { initializedPassport } from "./config/passport.config.js";
 import cookieParser from "cookie-parser";
+import { checkRole } from "./middlewares/auth.js";
 
 // SERVICE
 const messages = [];
@@ -57,7 +58,7 @@ app.set("views", __dirname + "/views");
 app.use("/", viewsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
-app.use("/api/messages", messagesRouter);
+app.use("/api/messages", checkRole(["user"]), messagesRouter);
 app.use("/api/sessions", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/tickets", ticketsRouter);
@@ -72,7 +73,6 @@ socketServer.on("connection", (socket) => {
 
   socket.on("chat-message", async (data) => {
     //messages.push(data);
-    console.log("Data: " + data);
     const user = data.user;
     const message = data.message;
     const result = await messageManager.create(user, message);

@@ -6,7 +6,7 @@ messageRouter.use(json());
 
 // Postman GET http://localhost:8080/api/message => Todos los mensajes
 messageRouter.get("/", async (req, res) => {
-  const messages = await messageManager.getMessages();
+  const messages = await MessageManager.getMessages();
   res.send(messages);
 });
 
@@ -16,7 +16,7 @@ messageRouter.post("/", async (req, res) => {
   const { user, message } = req.body;
   console.log("username: " + user);
   console.log("message: " + message);
-  const result = await messageManager.create(user, message);
+  const result = await MessageManager.create(user, message);
   res.status(201).send({ status: "ok", payload: { user, message } });
 });
 

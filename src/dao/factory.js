@@ -28,9 +28,9 @@ const persistence = options.server.persistance;
 
 let CartManager,
   ProductManager,
-  MessageManager,
   UserManager,
   TicketManager,
+  MessageManager,
   MessageModel;
 
 if (persistence === "mongo") {

@@ -2,7 +2,7 @@ import { CartManager } from "../dao/factory.js";
 
 export const createCart = () => {
   try {
-    const cartAdded = CartManager.createCart();
+    const cartAdded = CartManager.createCart({});
     return cartAdded;
   } catch (error) {
     return error.message;

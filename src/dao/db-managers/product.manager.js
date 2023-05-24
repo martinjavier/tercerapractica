@@ -80,10 +80,11 @@ class ProductManager {
   // POSTMAN GET http://localhost:8080/api/products/64266458ef82d358d9ac3ea4
   async getProductById(id) {
     try {
+      console.log("ID Recibido:" + id);
       //Comprobación de la estructura y validez del Id de producto recibido por parámetro
-      if (id.trim().length != 24) {
-        throw new Error("El Id de producto ingresado no es válido");
-      }
+      // if (id.length != 24) {
+      //   throw new Error("El Id de producto ingresado no es válido");
+      // }
       const data = await this.model.findById(id);
       if (data) {
         // console.log("data", data)

@@ -4,6 +4,7 @@ class TicketManager {
   }
 
   async addTicket(ticket) {
+    console.log(ticket);
     try {
       const data = await this.model.create(ticket);
       const response = JSON.parse(JSON.stringify(data));

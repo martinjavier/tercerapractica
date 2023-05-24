@@ -3,6 +3,7 @@ import {
   getProductById,
   createProduct,
   updateProduct,
+  updateProductStock,
   deleteProduct,
   getPaginateProducts,
 } from "../services/product.service.js";
@@ -38,6 +39,13 @@ export const updateProductController = (req, res) => {
   const productId = req.params.pid;
   const body = req.body;
   const result = updateProduct(productId, body);
+  res.json({ status: "success", data: result });
+};
+
+export const updateProductStockController = (req, res) => {
+  const productId = req.params.pid;
+  const productStock = req.params.stock;
+  const result = updateProductStock(productId, productStock);
   res.json({ status: "success", data: result });
 };
 

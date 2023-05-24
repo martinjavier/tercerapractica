@@ -18,8 +18,9 @@ class CartManager {
   // POSTMAN PUT http://localhost:8080/api/carts/642c94072f2ec4bf4a7b4923/product/642c517ccbcc6f6acabf0a54
   addOneProduct = async (cartId, productId) => {
     const cart = await this.model.findById(cartId);
-    cart.products.push({ productId });
-    return cart.save();
+    cart.products.push(productId);
+    await cart.save();
+    return cart;
   };
 
   // POSTMAN DELETE http://localhost:8080/api/carts/642660d39cd3ec80e43f50ab
@@ -72,10 +73,6 @@ class CartManager {
         console.log("falta Información");
       } else {
         const cart = await this.model.findById(cartId);
-        const cartProducts = cart.products;
-        console.log("Quantity Prod 1 : " + cartProducts[0].quantity);
-        console.log("ID Prod 1: " + cartProducts[0]._id);
-
         return cart;
       }
     } catch (err) {

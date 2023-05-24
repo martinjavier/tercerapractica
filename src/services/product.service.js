@@ -43,6 +43,15 @@ export const updateProduct = (productId, product) => {
   }
 };
 
+export const updateProductStock = (productId, stock) => {
+  try {
+    const updatedProduct = ProductManager.updateProductStock(productId, stock);
+    return updatedProduct;
+  } catch (error) {
+    return error.message;
+  }
+};
+
 export const deleteProduct = (productId) => {
   try {
     const productDeleted = ProductManager.deleteProduct(productId);

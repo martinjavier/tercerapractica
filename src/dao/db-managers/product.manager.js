@@ -109,6 +109,20 @@ class ProductManager {
     }
   }
 
+  async updateProductStock(id, stock) {
+    try {
+      let product = await this.model.findById(id);
+      product.stock = stock;
+      const data = await this.model.findByIdAndUpdate(id, product, {
+        new: true,
+      });
+      const response = JSON.parse(JSON.stringify(data));
+      return response;
+    } catch (error) {
+      throw new Error(`Error al actualizar: no se encontró el id ${id}`);
+    }
+  }
+
   async deleteProduct(id) {
     try {
       await this.model.findByIdAndDelete(id);

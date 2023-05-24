@@ -7,7 +7,10 @@ import {
   cartPurchase,
 } from "../services/cart.service.js";
 
-import { getProductById } from "../services/product.service.js";
+import {
+  getProductById,
+  updateProductStock,
+} from "../services/product.service.js";
 
 export const getCartsController = async (req, res) => {
   try {
@@ -46,12 +49,7 @@ export const addProductController = async (req, res) => {
   try {
     const cartId = req.params.cid;
     const prodId = req.params.pid;
-
-    console.log("CART ID: " + cartId);
-    console.log("PROD ID: " + prodId);
-
-    const product = req.body;
-    const result = addProduct(cartId, product);
+    const result = addProduct(cartId, prodId);
     res.json({ status: "success", payload: result });
   } catch (error) {
     res.json({ status: "error", message: error.message });
@@ -67,38 +65,34 @@ export const purchaseCartController = async (req, res) => {
     console.log("Cart: " + cart);
 
     console.log("EN CART:");
-    console.log("Cuantos Productos: " + cart.products.length);
+    console.log("Cuantos Productos en el carrito: " + cart.products.length);
 
-    const IDProd1 = cart.products[0]._id;
-    const QuantityProd1 = cart.products[0].quantity;
+    const totalProductsInCart = cart.products.length;
 
-    console.log("Product 1 ID: " + IDProd1);
-    console.log("Product 1 Quantity: " + QuantityProd1);
+    for (let i = 0; i < totalProductsInCart; i++) {
+      const IDProd = cart.products[i]._id;
+      const QuantityProd = cart.products[i].quantity;
 
-    const IDProd2 = cart.products[1]._id;
-    const QuantityProd2 = cart.products[1].quantity;
+      console.log("Product " + i + " ID: " + IDProd);
+      console.log("Product " + i + " Quantity: " + QuantityProd);
 
-    console.log("Product 2 ID: " + IDProd2);
-    console.log("Product 2 Quantity: " + QuantityProd2);
+      const prod = await getProductById(IDProd);
 
-    //const prod1 = getProductById(IDProd1);
-    //console.log("PROD: " + prod1);
-    //console.log("Prod Quantity: " + prod.quantity);
+      console.log("PROD STOCK " + i + ": " + prod.stock);
 
-    const body = req.body;
-    console.log("BODY: " + JSON.stringify(body));
-
-    const ticketCode = req.body.code;
-    console.log("Code: " + ticketCode);
-
-    const ticketDate = req.body.purchase_datetime;
-    console.log("Date: " + ticketDate);
-
-    const ticketAmount = req.body.amount;
-    console.log("Amount: " + ticketAmount);
-
-    const ticketPurchaser = req.body.purchaser;
-    console.log("Purchaser: " + ticketPurchaser);
+      // Verifica el Stock de dicho producto
+      if (prod.stock < QuantityProd) {
+        // En caso que no haya stock informa al usuario
+        res.json({
+          status: "error",
+          message: "There are not enough quantity of product " + IDProd,
+        });
+      } else {
+        // Si lo hay realiza la reducción de stock en base a la cantidad de ese producto en el carrito
+        const finalStock = prod.stock - QuantityProd;
+        const result = await updateProductStock(IDProd, finalStock);
+      }
+    }
 
     const result = cartPurchase(cartId);
     res.json({ status: "success", payload: result });

@@ -9,6 +9,7 @@ import {
   getProductByIdController,
   createProductController,
   updateProductController,
+  updateProductStockController,
   deleteProductController,
 } from "../controllers/products.controller.js";
 
@@ -18,6 +19,7 @@ productsRouter.get("/", getProductsController);
 productsRouter.get("/:pid", getProductByIdController);
 productsRouter.post("/", checkRole(["admin"]), createProductController);
 productsRouter.put("/:pid", checkRole(["admin"]), updateProductController);
+productsRouter.put("/:pid/:stock", updateProductStockController);
 productsRouter.delete("/:pid", checkRole(["admin"]), deleteProductController);
 
 export default productsRouter;

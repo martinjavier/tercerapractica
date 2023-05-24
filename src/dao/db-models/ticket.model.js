@@ -3,10 +3,10 @@ import mongoose from "mongoose";
 export const ticketCollection = "tickets";
 
 const ticketSchema = new mongoose.Schema({
-  code: { type: String, unique: true },
-  purchase_datetime: { type: Date, required: false },
-  amount: { type: Number, required: false },
-  purchaser: { type: String, required: false },
+  code: { type: String, required: true },
+  purchase_datetime: { type: Date, required: true },
+  amount: { type: Number, required: true },
+  purchaser: { type: String, required: true },
 });
 
 const DbTicketModel = mongoose.model(ticketCollection, ticketSchema);

@@ -1,4 +1,4 @@
-import { uuid } from "uuidv4";
+import { v4 as uuid_v4 } from "uuid";
 
 import {
   createCart,
@@ -78,7 +78,6 @@ export const purchaseCartController = async (req, res) => {
     for (let i = 0; i < totalProductsInCart; i++) {
       const IDProd = cart.products[i]._id;
       const QuantityProd = cart.products[i].quantity;
-      const PriceProd = cart.products[i].price;
 
       console.log("Cart Product " + i + " ID: " + IDProd);
       console.log("Cart Product " + i + " Quantity: " + QuantityProd);
@@ -105,8 +104,7 @@ export const purchaseCartController = async (req, res) => {
 
     const datetime = new Date();
 
-    //const codeTicket = uuid();
-    const codeTicket = "3123123";
+    const codeTicket = "4123123";
 
     const newTicket = {
       code: codeTicket,

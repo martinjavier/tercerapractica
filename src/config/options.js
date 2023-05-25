@@ -25,4 +25,13 @@ export const options = {
     cookieToken: COOKIE_TOKEN,
     persistance: PERSISTANCE,
   },
+  gmail: {
+    adminAccount: process.env.ADMIN_EMAIL,
+    adminPass: process.env.ADMIN_PASS,
+  },
+  twilio: {
+    id: process.env.TWILIO_ID,
+    token: process.env.TWILIO_TOKEN,
+    phone: process.env.TWILIO_PHONE,
+  },
 };

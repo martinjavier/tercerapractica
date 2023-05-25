@@ -10,7 +10,7 @@ class TicketManager {
       return response;
     } catch (error) {
       console.log(error.message);
-      //throw new Error(`Error creating a new ticket : ${error.message}`);
+      throw new Error(`Error creating a new ticket : ${error.message}`);
     }
   }
 

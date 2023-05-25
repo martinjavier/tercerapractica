@@ -1,5 +1,5 @@
 import { v4 as uuid_v4 } from "uuid";
-
+import { twilioClient, twilioPhone } from "../config/twilio.js";
 import {
   createCart,
   getCarts,
@@ -8,12 +8,10 @@ import {
   deleteCart,
   cartPurchase,
 } from "../services/cart.service.js";
-
 import {
   getProductById,
   updateProductStock,
 } from "../services/product.service.js";
-
 import { createTicket } from "../services/ticket.service.js";
 
 export const getCartsController = async (req, res) => {
@@ -104,7 +102,7 @@ export const purchaseCartController = async (req, res) => {
 
     const datetime = new Date();
 
-    const codeTicket = "4123123";
+    const codeTicket = uuid_v4();
 
     const newTicket = {
       code: codeTicket,
@@ -114,6 +112,14 @@ export const purchaseCartController = async (req, res) => {
     };
 
     const ticketCreation = createTicket(newTicket);
+
+    // ENVÍO DE SMS
+    const message = await twilioClient.messages.create({
+      body: "Su compra por $" + amount + " se ha realizado correctamente",
+      from: twilioPhone,
+      to: "+34697664291",
+    });
+    console.log("message:" + JSON.stringify(message));
 
     const result = cartPurchase(cartId);
     res.json({ status: "success", payload: result });

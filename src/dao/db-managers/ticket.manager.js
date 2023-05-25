@@ -3,13 +3,14 @@ class TicketManager {
     this.model = model;
   }
 
-  async addTicket(ticket) {
+  async addOneTicket(ticket) {
     try {
       const data = await this.model.create(ticket);
       const response = JSON.parse(JSON.stringify(data));
       return response;
     } catch (error) {
-      throw new Error(`Error creating a new ticket : ${error.message}`);
+      console.log(error.message);
+      //throw new Error(`Error creating a new ticket : ${error.message}`);
     }
   }
 

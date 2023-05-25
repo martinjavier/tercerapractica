@@ -2,7 +2,7 @@ import { TicketManager } from "../dao/factory.js";
 
 export const createTicket = (ticket) => {
   try {
-    const ticketAdded = TicketManager.addTicket(ticket);
+    const ticketAdded = TicketManager.addOneTicket(ticket);
     return ticketAdded;
   } catch (error) {
     return error.message;

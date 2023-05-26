@@ -2,7 +2,7 @@ import { UserManager } from "../dao/factory.js";
 
 export const createUser = (user) => {
   try {
-    const userAdded = UserManager.addUser(user);
+    let userAdded = UserManager.addUser(user);
     return userAdded;
   } catch (error) {
     return error.message;

@@ -11,4 +11,6 @@ const ticketSchema = new mongoose.Schema({
 
 let DbTicketModel = mongoose.model(ticketCollection, ticketSchema);
 
+DbTicketModel.createIndexes();
+
 export default DbTicketModel;

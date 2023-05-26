@@ -11,8 +11,8 @@ import {
 const cartsRouter = Router();
 cartsRouter.use(json());
 
-const productsRouter = Router();
-productsRouter.use(json());
+//const productsRouter = Router();
+//productsRouter.use(json());
 
 cartsRouter.get("/", getCartsController);
 cartsRouter.get("/:cid", getCartByIdController);

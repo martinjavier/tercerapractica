@@ -5,7 +5,7 @@ class TicketManager {
 
   async addOneTicket(ticket) {
     try {
-      const data = await this.model.create(ticket);
+      let data = await this.model.create(ticket);
       const response = JSON.parse(JSON.stringify(data));
       return response;
     } catch (error) {

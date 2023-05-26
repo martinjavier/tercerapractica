@@ -11,8 +11,13 @@ class CartManager {
 
   // POSTMAN POST http://localhost:8080/api/carts { "products": [ { "id": "642c517ccbcc6f6acabf0a54", "quantity": 500 } ] }
   createCart = async () => {
-    const result = await this.model.create();
-    return result;
+    try {
+      const data = await this.model.create();
+      const response = JSON.parse(JSON.stringify(data));
+      return response;
+    } catch (error) {
+      throw new Error(`Error creating Cart: ${error.message}`);
+    }
   };
 
   // POSTMAN PUT http://localhost:8080/api/carts/642c94072f2ec4bf4a7b4923/product/642c517ccbcc6f6acabf0a54

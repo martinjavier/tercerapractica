@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { cartCollection } from "./cart.model.js";
+import DbCartModel from "./cart.model.js";
 
 const userCollection = "users";
 
@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
   },
   cart: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: cartCollection,
+    ref: DbCartModel,
   },
   role: {
     type: String,
@@ -37,6 +37,6 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-const userModel = mongoose.model(userCollection, userSchema);
+let userModel = mongoose.model(userCollection, userSchema);
 
 export default userModel;

@@ -6,6 +6,8 @@ import {
   deleteTicket,
 } from "../services/ticket.service.js";
 
+// GET
+// localhost:8080/api/tickets
 export const getTicketController = async (req, res) => {
   try {
     const tickets = await getTickets();
@@ -27,28 +29,28 @@ export const getTicketByIdController = async (req, res) => {
 export const createTicketController = async (req, res) => {
   try {
     // CREO EL TICKET
-    const ticketCreated = createTicket(req.body);
+    let ticketCreated = await createTicket(req.body);
     res.json({ status: "success", payload: ticketCreated });
   } catch (error) {
     res.json({ status: "error", message: error.message });
   }
 };
 
-export const updateTicketController = (req, res) => {
+export const updateTicketController = async (req, res) => {
   try {
     const ticketId = req.params.tid;
     const body = req.body;
-    const result = updateTicket(ticketId, body);
+    const result = await updateTicket(ticketId, body);
     res.json({ status: "success", data: result });
   } catch (error) {
     res.json({ status: "error", message: error.message });
   }
 };
 
-export const deleteTicketController = (req, res) => {
+export const deleteTicketController = async (req, res) => {
   try {
     const ticketId = req.params.tid;
-    const result = deleteTicket(ticketId);
+    const result = await deleteTicket(ticketId);
     res.json({ status: "success", data: result });
   } catch (error) {
     res.json({ status: "error", message: error.message });

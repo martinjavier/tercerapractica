@@ -34,16 +34,16 @@ export const getCartByIdController = async (req, res) => {
 
 export const createCartController = async (req, res) => {
   try {
-    const cartCreated = createCart();
+    const cartCreated = await createCart();
     res.json({ status: "success", payload: cartCreated });
   } catch (error) {
     res.json({ status: "error", message: error.message });
   }
 };
 
-export const deleteCartController = (req, res) => {
+export const deleteCartController = async (req, res) => {
   const cartId = req.params.cid;
-  const result = deleteCart(cartId);
+  const result = await deleteCart(cartId);
   res.json({ status: "success", data: result });
 };
 
@@ -51,13 +51,15 @@ export const addProductController = async (req, res) => {
   try {
     const cartId = req.params.cid;
     const prodId = req.params.pid;
-    const result = addProduct(cartId, prodId);
+    const result = await addProduct(cartId, prodId);
     res.json({ status: "success", payload: result });
   } catch (error) {
     res.json({ status: "error", message: error.message });
   }
 };
 
+// PUT
+// localhost:8080/api/carts/646e74e5ad94d46e462834fc/purchase
 export const purchaseCartController = async (req, res) => {
   try {
     const cartId = req.params.cid;
@@ -111,18 +113,21 @@ export const purchaseCartController = async (req, res) => {
       purchaser: "martinjavierd@gmail.com",
     };
 
-    const ticketCreation = createTicket(newTicket);
+    const ticketCreation = await createTicket(newTicket);
 
     // ENVÍO DE SMS
+    /*
     const message = await twilioClient.messages.create({
       body: "Su compra por $" + amount + " se ha realizado correctamente",
       from: twilioPhone,
       to: "+34697664291",
     });
     console.log("message:" + JSON.stringify(message));
+    */
 
     const result = cartPurchase(cartId);
-    res.json({ status: "success", payload: result });
+
+    res.json({ status: "success", payload: ticketCreation });
   } catch (error) {
     res.json({ status: "error", message: error.message });
   }

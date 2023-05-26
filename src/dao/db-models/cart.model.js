@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
 
-export const cartCollection = "carts";
+const cartCollection = "carts";
 
 const cartSchema = new mongoose.Schema({
   products: {
@@ -23,12 +23,14 @@ const cartSchema = new mongoose.Schema({
   },
 });
 
+/*
 cartSchema.pre("find", function () {
   this.populate("products.id");
 });
+*/
 
 // El parámetro "products.id" se refiere a la propiedad "id" del campo "products" del modelo "Cart".
-const DbCartModel = mongoose.model(cartCollection, cartSchema);
+let DbCartModel = mongoose.model(cartCollection, cartSchema);
 
 export default DbCartModel;
 

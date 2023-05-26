@@ -29,7 +29,7 @@ export const getTicketByIdController = async (req, res) => {
 export const createTicketController = async (req, res) => {
   try {
     // CREO EL TICKET
-    let ticketCreated = await createTicket(req.body);
+    let ticketCreated = createTicket(req.body);
     res.json({ status: "success", payload: ticketCreated });
   } catch (error) {
     res.json({ status: "error", message: error.message });

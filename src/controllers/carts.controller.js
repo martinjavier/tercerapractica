@@ -34,7 +34,7 @@ export const getCartByIdController = async (req, res) => {
 
 export const createCartController = async (req, res) => {
   try {
-    const cartCreated = await createCart();
+    const cartCreated = createCart(req.body);
     res.json({ status: "success", payload: cartCreated });
   } catch (error) {
     res.json({ status: "error", message: error.message });
@@ -116,14 +116,12 @@ export const purchaseCartController = async (req, res) => {
     const ticketCreation = await createTicket(newTicket);
 
     // ENVÍO DE SMS
-    /*
     const message = await twilioClient.messages.create({
       body: "Su compra por $" + amount + " se ha realizado correctamente",
       from: twilioPhone,
       to: "+34697664291",
     });
     console.log("message:" + JSON.stringify(message));
-    */
 
     const result = cartPurchase(cartId);
 

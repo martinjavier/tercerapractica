@@ -1,8 +1,8 @@
 import { CartManager } from "../dao/factory.js";
 
-export const createCart = async () => {
+export const createCart = (cart) => {
   try {
-    const cartAdded = await CartManager.createCart();
+    const cartAdded = CartManager.createCart(cart);
     console.log("Creando la CART: " + cartAdded);
     return cartAdded;
   } catch (error) {

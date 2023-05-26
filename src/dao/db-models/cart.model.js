@@ -23,11 +23,9 @@ const cartSchema = new mongoose.Schema({
   },
 });
 
-/*
 cartSchema.pre("find", function () {
   this.populate("products.id");
 });
-*/
 
 // El parámetro "products.id" se refiere a la propiedad "id" del campo "products" del modelo "Cart".
 let DbCartModel = mongoose.model(cartCollection, cartSchema);

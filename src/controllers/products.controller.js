@@ -57,7 +57,23 @@ export const updateProductController = (req, res) => {
 
 export const updateProductStockController = (req, res) => {
   const productId = req.params.pid;
+  if (!productId) {
+    CustomError.createError({
+      name: "Update Product error",
+      cause: generateProductErrorParam(productId),
+      message: "Error updating product",
+      errorCode: EError.INVALID_PARAM,
+    });
+  }
   const productStock = req.params.stock;
+  if (!productStock) {
+    CustomError.createError({
+      name: "Update Stock error",
+      cause: generateProductErrorParam(productStock),
+      message: "Error updating stock",
+      errorCode: EError.INVALID_PARAM,
+    });
+  }
   const result = updateProductStock(productId, productStock);
   res.json({ status: "success", data: result });
 };

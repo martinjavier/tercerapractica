@@ -16,12 +16,13 @@ export const isValidPassword = (user, password) => {
 
 export const generateProduct = () => {
   return {
+    _id: faker.database.mongodbObjectId(),
     title: faker.commerce.product(),
     description: faker.commerce.productDescription(),
     price: parseFloat(faker.commerce.price()),
     thumnail: faker.commerce.department(),
     code: parseInt(faker.string.numeric(2)),
-    stock: faker.image.url(),
+    stock: parseInt(faker.string.numeric(2)),
     status: "true",
     category: "Tecnología",
   };

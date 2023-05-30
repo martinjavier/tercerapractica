@@ -7,6 +7,7 @@ import {
 import {
   getProductsController,
   getProductByIdController,
+  getMockingProductsController,
   createProductController,
   updateProductController,
   updateProductStockController,
@@ -17,6 +18,7 @@ const productsRouter = Router();
 
 productsRouter.get("/", getProductsController);
 productsRouter.get("/:pid", getProductByIdController);
+productsRouter.get("/0/mockingproducts", getMockingProductsController);
 productsRouter.post("/", checkRole(["admin"]), createProductController);
 productsRouter.put("/:pid", checkRole(["admin"]), updateProductController);
 productsRouter.put("/:pid/:stock", updateProductStockController);

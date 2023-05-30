@@ -77,6 +77,16 @@ class ProductManager {
     }
   }
 
+  // POSTMAN GET http://localhost:8080/api/products/0/mockingproducts
+  async getMockingProducts(products) {
+    try {
+      const data = products;
+      return data;
+    } catch (error) {
+      throw new Error(`Error get all ${error}`);
+    }
+  }
+
   // POSTMAN GET http://localhost:8080/api/products/64266458ef82d358d9ac3ea4
   async getProductById(id) {
     try {

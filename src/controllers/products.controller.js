@@ -1,16 +1,29 @@
 import {
   getProducts,
   getProductById,
+  getMockingProducts,
   createProduct,
   updateProduct,
   updateProductStock,
   deleteProduct,
   getPaginateProducts,
 } from "../services/product.service.js";
+import { CustomError } from "../services/customError.service.js";
+import { EError } from "../enums/EError.js";
+import { generateProductErrorParam } from "../services/productErrorParams.js";
 
 export const getProductsController = async (req, res) => {
   try {
     const products = await getProducts();
+    res.json({ status: "success", payload: products });
+  } catch (error) {
+    res.json({ status: "error Controller", message: error.message });
+  }
+};
+
+export const getMockingProductsController = async (req, res) => {
+  try {
+    const products = await getMockingProducts();
     res.json({ status: "success", payload: products });
   } catch (error) {
     res.json({ status: "error Controller", message: error.message });

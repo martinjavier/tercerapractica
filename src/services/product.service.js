@@ -1,4 +1,5 @@
 import { ProductManager } from "../dao/factory.js";
+import { generateProduct } from "../utils.js";
 
 export const createProduct = (product) => {
   try {
@@ -29,6 +30,21 @@ export const getProductById = (prodId) => {
   try {
     const product = ProductManager.getProductById(prodId);
     return product;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+export const getMockingProducts = () => {
+  try {
+    // Mocking con productos
+    const cant = 100;
+    const products = [];
+    for (let i = 0; i < cant; i++) {
+      const product = generateProduct();
+      products.push(product);
+    }
+    return products;
   } catch (error) {
     return error.message;
   }

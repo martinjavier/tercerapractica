@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/martinjavier/entregable#readme",
   "dependencies": {
+    "@faker-js/faker": "^8.0.2",
     "alert": "^5.1.4",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",

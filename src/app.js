@@ -2,6 +2,7 @@ import express from "express";
 import { engine } from "express-handlebars";
 import { options } from "./config/options.js";
 import { __dirname } from "./utils.js";
+import { addLogger } from "./utils/logger.js";
 import path from "path";
 // ROUTES
 import productsRouter from "./routes/products.routes.js";
@@ -30,6 +31,9 @@ const app = express();
 const httpServer = app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
+
+// Logging
+app.use(addLogger);
 
 // Only One Mongo Connection
 const dbInstance = ConnectionDb.getInstance();
@@ -62,6 +66,17 @@ app.use("/api/messages", checkRole(["user"]), messagesRouter);
 app.use("/api/sessions", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/tickets", ticketsRouter);
+
+app.get("/niveles", (req, res) => {
+  req.logger.silly("Nivel Silly");
+  req.logger.verbose("Nivel Verbose");
+  req.logger.debug("Nivel Debug");
+  req.logger.http("Nivel Http");
+  req.logger.info("Nivel Info");
+  req.logger.warn("Nivel Warn");
+  req.logger.error("Nivel Error");
+  res.send("Prueba Niveles");
+});
 
 // SOCKET SERVER CONFIG
 socketServer.on("connection", (socket) => {

@@ -5,6 +5,7 @@ import {
   updateTicket,
   deleteTicket,
 } from "../services/ticket.service.js";
+import { addLogger } from "../utils/logger.js";
 
 // GET
 // localhost:8080/api/tickets
@@ -13,6 +14,7 @@ export const getTicketController = async (req, res) => {
     const tickets = await getTickets();
     res.json({ status: "success", payload: tickets });
   } catch (error) {
+    req.logger.error(error.message);
     res.json({ status: "error", message: error.message });
   }
 };
@@ -22,6 +24,7 @@ export const getTicketByIdController = async (req, res) => {
     const ticket = await getTicketById(req.params.tid);
     res.json({ status: "success", payload: ticket });
   } catch (error) {
+    req.logger.error(error.message);
     res.json({ status: "error", message: error.message });
   }
 };
@@ -32,6 +35,7 @@ export const createTicketController = async (req, res) => {
     let ticketCreated = createTicket(req.body);
     res.json({ status: "success", payload: ticketCreated });
   } catch (error) {
+    req.logger.error(error.message);
     res.json({ status: "error", message: error.message });
   }
 };
@@ -43,6 +47,7 @@ export const updateTicketController = async (req, res) => {
     const result = await updateTicket(ticketId, body);
     res.json({ status: "success", data: result });
   } catch (error) {
+    req.logger.error(error.message);
     res.json({ status: "error", message: error.message });
   }
 };
@@ -53,6 +58,7 @@ export const deleteTicketController = async (req, res) => {
     const result = await deleteTicket(ticketId);
     res.json({ status: "success", data: result });
   } catch (error) {
+    req.logger.error(error.message);
     res.json({ status: "error", message: error.message });
   }
 };

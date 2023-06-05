@@ -38,7 +38,8 @@
     "socket.io": "^4.6.1",
     "sweetalert2": "^11.7.3",
     "twilio": "^4.11.1",
-    "uuidv4": "^6.2.13"
+    "uuidv4": "^6.2.13",
+    "winston": "^3.9.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"

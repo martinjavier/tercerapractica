@@ -31,7 +31,8 @@ let CartManager,
   UserManager,
   TicketManager,
   MessageManager,
-  MessageModel;
+  MessageModel,
+  UserModel;
 
 if (persistence === "mongo") {
   CartManager = new DbCartManager(DbCartModel);
@@ -40,6 +41,7 @@ if (persistence === "mongo") {
   UserManager = new DbUserManager(DbUserModel);
   TicketManager = new DbTicketManager(DbTicketModel);
   MessageModel = DbMessageModel;
+  UserModel = DbUserModel;
 } else if (persistence === "file") {
   CartManager = FileCartManager;
   ProductManager = FileProductManager;
@@ -47,6 +49,7 @@ if (persistence === "mongo") {
   UserManager = FileUserManager;
   TicketManager = FileTicketManager;
   MessageModel = FileMessageModel;
+  UserModel = FileUserModel;
 } else {
   throw new Error("Unknow persistence type");
 }
@@ -58,4 +61,5 @@ export {
   UserManager,
   TicketManager,
   MessageModel,
+  UserModel,
 };

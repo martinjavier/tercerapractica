@@ -59,7 +59,7 @@ class UserManager {
       const response = JSON.parse(JSON.stringify(data));
       return response;
     } catch (error) {
-      throw new Error(`Error deleting user: ${error.message}`);
+      throw new Error(`Error updating user: ${error.message}`);
     }
   }
 }

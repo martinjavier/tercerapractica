@@ -1,7 +1,9 @@
 import path from "path";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { fileURLToPath } from "url";
 import { faker } from "@faker-js/faker";
+import { options } from "./config/options.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export { __dirname };
@@ -26,6 +28,23 @@ export const generateProduct = () => {
     status: "true",
     category: "Tecnología",
   };
+};
+
+export const generateEmailToken = (email, expireTime) => {
+  const token = jwt.sign({ email }, options.gmail.emailToken, {
+    expiresIn: expireTime,
+  });
+  return token;
+};
+
+export const verifyEmailToken = (token) => {
+  try {
+    const info = jwt.verify(token, options.gmail.emailToken);
+    return info.email;
+  } catch (error) {
+    console.log(error.message);
+    return null;
+  }
 };
 
 //const product = generateProduct();

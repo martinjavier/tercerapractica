@@ -11,6 +11,8 @@ import {
   failSignup,
   failLogin,
   logoutController,
+  forgotController,
+  resetController,
 } from "../controllers/auth.controller.js";
 
 const authRouter = Router();
@@ -26,5 +28,9 @@ authRouter.post("/login", loginController, redirectController);
 authRouter.get("/failure-login", failLogin);
 
 authRouter.get("/logout", logoutController);
+
+authRouter.post("/forgot-password", forgotController);
+
+authRouter.post("/reset-password", resetController);
 
 export default authRouter;

@@ -28,6 +28,7 @@ export const options = {
   gmail: {
     adminAccount: process.env.ADMIN_EMAIL,
     adminPass: process.env.ADMIN_PASS,
+    emailToken: process.env.ADMIN_SECRET_TOKEN,
   },
   twilio: {
     id: process.env.TWILIO_ID,

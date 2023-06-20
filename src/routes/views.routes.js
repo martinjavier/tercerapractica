@@ -26,6 +26,15 @@ viewsRouter.get("/signup", async (req, res) => {
   res.render("signup");
 });
 
+viewsRouter.get("/forgot-password", async (req, res) => {
+  res.render("forgotPassword");
+});
+
+viewsRouter.get("/reset-password", (req, res) => {
+  const token = req.query.token;
+  res.render("resetPassword", { token });
+});
+
 viewsRouter.get(
   "/current",
   passport.authenticate("authJWT", { session: false }),

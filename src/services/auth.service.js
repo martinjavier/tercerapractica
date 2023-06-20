@@ -1,8 +1,10 @@
-import { UserManager } from "../dao/factory.js";
+import { UserManager, UserModel } from "../dao/factory.js";
 import alert from "alert";
 import jwt from "jsonwebtoken";
 import { options } from "../config/options.js";
-import { isValidPassword, createHash } from "../utils.js";
+import { isValidPassword, createHash, verifyEmailToken } from "../utils.js";
+import { sendRecoveryPass } from "../utils/email.js";
+import { generateEmailToken } from "../utils.js";
 
 export const signup = async (req, res) => {
   try {
@@ -78,5 +80,61 @@ export const login = async (req, res) => {
     }
   } catch (error) {
     res.json({ stats: "errorLogin", message: error.message });
+  }
+};
+
+export const forgot = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await UserManager.getUserByEmail(email);
+    if (user) {
+      console.log("Existe el usuario");
+      const token = generateEmailToken(email, 180);
+      console.log("General el token: " + token);
+      await sendRecoveryPass(email, token);
+      res.send(
+        "Email was sent to your email account <a href='/login'>To Login</a>"
+      );
+    } else {
+      res.send(
+        "Email was not found <a href='/forgot-password'>Go to Reset Password</a>"
+      );
+    }
+  } catch (error) {
+    res.send("Error <a href='/forgot-password'>Go to Reset Password</a>");
+  }
+};
+
+export const reset = async (req, res) => {
+  try {
+    const token = req.query.token;
+    const { email, newPassword } = req.body;
+    const validEmail = verifyEmailToken(token);
+    if (!validEmail) {
+      return res.send(
+        `The link is not valid, please generate a new link to recover your password <a href="/forgot-password">Recover Password</a>`
+      );
+    } else {
+      const user = await UserManager.getUserByEmail(email);
+      if (!user) {
+        req.send("User not registered");
+      } else {
+        if (isValidPassword(user, newPassword)) {
+          return res.send("You can't use the same password");
+        }
+        const userData = {
+          ...user,
+          password: createHash(newPassword),
+        };
+        //const userUpdate = await UserManager.updateUser(
+        const userUpdate = await UserModel.findOneAndUpdate(
+          { email: email },
+          userData
+        );
+        res.render("login", { message: "Password updated" });
+      }
+    }
+  } catch (error) {
+    res.send(error.message);
   }
 };

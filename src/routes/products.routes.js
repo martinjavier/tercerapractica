@@ -20,7 +20,11 @@ productsRouter.get("/", getProductsController);
 productsRouter.get("/:pid", getProductByIdController);
 productsRouter.get("/0/mockingproducts", getMockingProductsController);
 productsRouter.post("/", checkRole(["admin"]), createProductController);
-productsRouter.put("/:pid", checkRole(["admin"]), updateProductController);
+productsRouter.put(
+  "/:pid",
+  checkRole(["admin", "superadmin"]),
+  updateProductController
+);
 productsRouter.put("/:pid/:stock", updateProductStockController);
 productsRouter.delete("/:pid", checkRole(["admin"]), deleteProductController);
 

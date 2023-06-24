@@ -1,3 +1,5 @@
+import passport from "passport";
+import jwt from "jsonwebtoken";
 import {
   getProducts,
   getProductById,
@@ -42,8 +44,15 @@ export const getProductByIdController = async (req, res) => {
 
 export const createProductController = async (req, res) => {
   try {
+    let token = req.cookies[options.server.cookieToken];
+    passport.authenticate("jwt", { session: false });
+    const info = jwt.verify(token, options.server.secretToken);
+    const userId = "admin";
+    if (info._id) {
+      userId = info._id;
+    }
     const product = req.body;
-    product.owner = req.user._id;
+    product.owner = userId;
     const productCreated = createProduct(product);
     res.json({ status: "success", payload: productCreated });
   } catch (error) {

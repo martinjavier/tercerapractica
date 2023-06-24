@@ -1,3 +1,6 @@
+import passport from "passport";
+import jwt from "jsonwebtoken";
+import { options } from "../config/options.js";
 import { v4 as uuid_v4 } from "uuid";
 import { twilioClient, twilioPhone } from "../config/twilio.js";
 import {
@@ -51,7 +54,27 @@ export const addProductController = async (req, res) => {
   try {
     const cartId = req.params.cid;
     const prodId = req.params.pid;
-    const result = await addProduct(cartId, prodId);
+    const product = await getProductById(prodId);
+    console.log("PRODUCT OWNER: " + JSON.stringify(product.owner));
+    const productOwnerId = JSON.stringify(product.owner);
+    let token = req.cookies[options.server.cookieToken];
+    passport.authenticate("jwt", { session: false });
+    const info = jwt.verify(token, options.server.secretToken);
+    const userRole = JSON.stringify(info.role);
+    const userId = JSON.stringify(info._id);
+    let result = null;
+
+    console.log("USER ROLE: " + userRole);
+    console.log("USER ID: " + userId);
+    console.log("Prod Owner ID: " + productOwnerId);
+
+    if (userRole === "premium") {
+      if (userId != productOwnerId) {
+        result = await addProduct(cartId, prodId);
+      } else {
+        result = "Premium user can not add an own product to the Cart";
+      }
+    }
     res.json({ status: "success", payload: result });
   } catch (error) {
     res.json({ status: "error", message: error.message });

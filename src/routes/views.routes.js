@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import { Router } from "express";
 import { CartManager } from "../dao/factory.js";
 import { ProductManager } from "../dao/factory.js";
@@ -6,6 +7,7 @@ import { UserManager } from "../dao/factory.js";
 import passport from "passport";
 import alert from "alert";
 import { isUserAuthenticate } from "../middlewares/validations.js";
+import { options } from "../config/options.js";
 
 const viewsRouter = Router();
 //const productManager = new ProductManager(ProductModel);
@@ -39,11 +41,14 @@ viewsRouter.get(
   "/current",
   passport.authenticate("authJWT", { session: false }),
   async (req, res) => {
+    //let token = req.cookies[options.server.cookieToken];
+    //const userData = jwt.verify(token, options.server.secretToken);
     try {
       if (req.user) {
         const userInfo = {
           id: req.user._id,
           first_name: req.user.first_name,
+          last_name: req.user.last_name,
           email: req.user.email,
           role: req.user.role,
         };
@@ -67,6 +72,7 @@ viewsRouter.get(
         const userInfo = {
           id: req.user._id,
           first_name: req.user.first_name,
+          last_name: req.user.last_name,
           email: req.user.email,
           role: req.user.role,
         };

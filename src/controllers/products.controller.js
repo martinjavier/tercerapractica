@@ -11,6 +11,7 @@ import {
 import { CustomError } from "../services/customError.service.js";
 import { EError } from "../enums/EError.js";
 import { generateProductErrorParam } from "../services/productErrorParams.js";
+import { options } from "../config/options.js";
 
 export const getProductsController = async (req, res) => {
   try {
@@ -41,7 +42,9 @@ export const getProductByIdController = async (req, res) => {
 
 export const createProductController = async (req, res) => {
   try {
-    const productCreated = createProduct(req.body);
+    const product = req.body;
+    product.owner = req.user._id;
+    const productCreated = createProduct(product);
     res.json({ status: "success", payload: productCreated });
   } catch (error) {
     res.json({ status: "error", message: error.message });

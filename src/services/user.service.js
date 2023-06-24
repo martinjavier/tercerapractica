@@ -1,4 +1,4 @@
-import { UserManager } from "../dao/factory.js";
+import { UserManager, UserModel } from "../dao/factory.js";
 
 export const createUser = (user) => {
   try {
@@ -42,5 +42,26 @@ export const deleteUser = (userId) => {
     return deletedUser;
   } catch (error) {
     return error.message;
+  }
+};
+
+export const premiumUser = async (req, res) => {
+  try {
+    const userId = req;
+    // Verifico si el usuario existe en la base de datos
+    const user = await UserModel.findById(userId);
+    const userRole = user.role;
+    if (userRole == "user") {
+      user.role = "premium";
+    } else if (userRole === "premium") {
+      user.role = "user";
+    } else {
+      return res.json({ status: "error", message: "Can not change user role" });
+    }
+    await UserModel.updateOne({ _id: user.id }, user);
+    return "User role was modified";
+  } catch (error) {
+    console.log(error.message);
+    //res.json({ status: "error", message: "Error trying to change user role" });
   }
 };

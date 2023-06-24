@@ -19,7 +19,11 @@ const productsRouter = Router();
 productsRouter.get("/", getProductsController);
 productsRouter.get("/:pid", getProductByIdController);
 productsRouter.get("/0/mockingproducts", getMockingProductsController);
-productsRouter.post("/", checkRole(["admin"]), createProductController);
+productsRouter.post(
+  "/",
+  checkRole(["admin", "premium"]),
+  createProductController
+);
 productsRouter.put(
   "/:pid",
   checkRole(["admin", "superadmin"]),

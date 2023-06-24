@@ -16,6 +16,10 @@ const productsSchema = new mongoose.Schema({
     required: true,
     enum: ["Deportes", "Tecnología", "Ropa"],
   },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",
+  },
 });
 
 productsSchema.plugin(mongoosePaginate);

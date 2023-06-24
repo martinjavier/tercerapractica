@@ -5,6 +5,7 @@ import { options } from "../config/options.js";
 import { isValidPassword, createHash, verifyEmailToken } from "../utils.js";
 import { sendRecoveryPass } from "../utils/email.js";
 import { generateEmailToken } from "../utils.js";
+import { createCart } from "../services/cart.service.js";
 
 export const signup = async (req, res) => {
   try {
@@ -22,14 +23,19 @@ export const signup = async (req, res) => {
         age,
         password: createHash(password),
         role,
+        cart: await createCart(),
       };
       const userCreated = await UserManager.addUser(newUser);
+      return userCreated;
+      /*
       const token = jwt.sign(
         {
           _id: userCreated._id,
           first_name: userCreated.first_name,
+          last_name: userCreated.last_name,
           email: userCreated.email,
           role: userCreated.role,
+          cart: userCreated.cart,
         },
         options.server.secretToken,
         { expiresIn: "24h" }
@@ -39,6 +45,7 @@ export const signup = async (req, res) => {
           httpOnly: true,
         })
         .redirect("/productos");
+        */
     } else {
       alert("User was already registered");
       res.redirect("/login");
@@ -59,6 +66,7 @@ export const login = async (req, res) => {
           {
             _id: user._id,
             first_name: user.first_name,
+            last_name: user.last_name,
             email: user.email,
             role: user.role,
           },

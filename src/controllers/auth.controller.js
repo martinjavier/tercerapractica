@@ -17,7 +17,7 @@ export const redirectController = async (req, res) => {
 };
 
 export const signupController = async (req, res) => {
-  const result = signup();
+  const result = signup(req, res);
   res.json({ status: "success", data: result });
 };
 

@@ -26,9 +26,9 @@ export const getProducts = (page, limit, sort, title, description, stock) => {
   }
 };
 
-export const getProductById = (prodId) => {
+export const getProductById = async (prodId) => {
   try {
-    const product = ProductManager.getProductById(prodId);
+    const product = await ProductManager.getProductById(prodId);
     return product;
   } catch (error) {
     return error.message;

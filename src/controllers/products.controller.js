@@ -14,6 +14,7 @@ import { CustomError } from "../services/customError.service.js";
 import { EError } from "../enums/EError.js";
 import { generateProductErrorParam } from "../services/productErrorParams.js";
 import { options } from "../config/options.js";
+import { ProductManager } from "../dao/factory.js";
 
 export const getProductsController = async (req, res) => {
   try {
@@ -35,6 +36,8 @@ export const getMockingProductsController = async (req, res) => {
 
 export const getProductByIdController = async (req, res) => {
   try {
+    console.log("ESTOY EN EL PRODUCT CONTROLLER");
+    console.log("REQ PARAMS: " + req.params);
     const product = await getProductById(req.params.pid);
     res.json({ status: "success", payload: product });
   } catch (error) {
@@ -92,7 +95,18 @@ export const updateProductStockController = (req, res) => {
 
 export const deleteProductController = (req, res) => {
   const productId = req.params.pid;
-  const result = deleteProduct(productId);
+  console.log("PRODUCT ID: " + productId);
+
+  let token = req.cookies[options.server.cookieToken];
+  passport.authenticate("jwt", { session: false });
+  const info = jwt.verify(token, options.server.secretToken);
+  console.log("USER ROLE: " + info.role);
+  //const product = ProductManager.getProductById(productId);
+  const product = getProductById(productId);
+  console.log("PRODUCT OWNER: " + JSON.stringify(product));
+
+  //const result = deleteProduct(productId);
+  const result = "NADA";
   res.json({ status: "success", data: result });
 };
 

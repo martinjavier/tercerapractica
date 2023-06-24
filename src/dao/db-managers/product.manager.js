@@ -90,20 +90,22 @@ class ProductManager {
   // POSTMAN GET http://localhost:8080/api/products/64266458ef82d358d9ac3ea4
   async getProductById(id) {
     try {
-      console.log("ID Recibido:" + id);
       //Comprobación de la estructura y validez del Id de producto recibido por parámetro
-      // if (id.length != 24) {
-      //   throw new Error("El Id de producto ingresado no es válido");
-      // }
+      if (id.length != 24) {
+        //throw new Error("El Id de producto ingresado no es válido");
+        return "Product length is not valid";
+      }
       const data = await this.model.findById(id);
       if (data) {
-        // console.log("data", data)
         const response = JSON.parse(JSON.stringify(data));
         return response;
+      } else {
+        //throw new Error(`No se encontró el producto`);
+        return "Product does not exits";
       }
-      throw new Error(`No se encontró el producto`);
     } catch (error) {
-      throw new Error(error.message);
+      //throw new Error(error.message);
+      return "Product does not exits";
     }
   }
 

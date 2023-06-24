@@ -30,7 +30,11 @@ productsRouter.put(
   updateProductController
 );
 productsRouter.put("/:pid/:stock", updateProductStockController);
-productsRouter.delete("/:pid", checkRole(["admin"]), deleteProductController);
+productsRouter.delete(
+  "/:pid",
+  checkRole(["admin", "premium"]),
+  deleteProductController
+);
 
 export default productsRouter;
 

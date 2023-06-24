@@ -5,6 +5,7 @@ import {
   updateUser,
   deleteUser,
   premiumUser,
+  getUserRole,
 } from "../services/user.service.js";
 import { UserModel } from "../dao/factory.js";
 
@@ -60,6 +61,16 @@ export const premiumUserController = (req, res) => {
   try {
     const userId = req.params.uid;
     const result = premiumUser(userId);
+    res.json({ status: "success", data: result });
+  } catch (error) {
+    res.json({ status: "error", message: error.message });
+  }
+};
+
+export const getUserRoleController = (req, res) => {
+  try {
+    const userId = req.params.uid;
+    const result = getUserRole(userId);
     res.json({ status: "success", data: result });
   } catch (error) {
     res.json({ status: "error", message: error.message });

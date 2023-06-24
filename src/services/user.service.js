@@ -65,3 +65,16 @@ export const premiumUser = async (req, res) => {
     //res.json({ status: "error", message: "Error trying to change user role" });
   }
 };
+
+export const getUserRole = async (req, res) => {
+  try {
+    const userId = req;
+    // Verifico si el usuario existe en la base de datos
+    const user = await UserModel.findById(userId);
+    const userRole = user.role;
+    return userRole;
+  } catch (error) {
+    console.log(error.message);
+    //res.json({ status: "error", message: "Error trying to change user role" });
+  }
+};

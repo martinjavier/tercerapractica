@@ -10,6 +10,7 @@ import {
   deleteProduct,
   getPaginateProducts,
 } from "../services/product.service.js";
+import { getUserRole } from "../services/user.service.js";
 import { CustomError } from "../services/customError.service.js";
 import { EError } from "../enums/EError.js";
 import { generateProductErrorParam } from "../services/productErrorParams.js";
@@ -37,7 +38,7 @@ export const getMockingProductsController = async (req, res) => {
 export const getProductByIdController = async (req, res) => {
   try {
     console.log("ESTOY EN EL PRODUCT CONTROLLER");
-    console.log("REQ PARAMS: " + req.params);
+    console.log("REQ PARAMS PID: " + JSON.stringify(req.params.pid));
     const product = await getProductById(req.params.pid);
     res.json({ status: "success", payload: product });
   } catch (error) {
@@ -50,11 +51,11 @@ export const createProductController = async (req, res) => {
     let token = req.cookies[options.server.cookieToken];
     passport.authenticate("jwt", { session: false });
     const info = jwt.verify(token, options.server.secretToken);
-    const userId = "admin";
+    let userId = "admin";
     if (info._id) {
       userId = info._id;
     }
-    const product = req.body;
+    let product = req.body;
     product.owner = userId;
     const productCreated = createProduct(product);
     res.json({ status: "success", payload: productCreated });
@@ -93,20 +94,39 @@ export const updateProductStockController = (req, res) => {
   res.json({ status: "success", data: result });
 };
 
-export const deleteProductController = (req, res) => {
+export const deleteProductController = async (req, res) => {
+  // Obtengo el Product ID
   const productId = req.params.pid;
-  console.log("PRODUCT ID: " + productId);
-
+  // Obtengo el rol del usuario
   let token = req.cookies[options.server.cookieToken];
   passport.authenticate("jwt", { session: false });
   const info = jwt.verify(token, options.server.secretToken);
-  console.log("USER ROLE: " + info.role);
+  const userId = info._id;
+  const userRole = info.role;
+  // Obtengo el producto
   //const product = ProductManager.getProductById(productId);
-  const product = getProductById(productId);
-  console.log("PRODUCT OWNER: " + JSON.stringify(product));
-
-  //const result = deleteProduct(productId);
-  const result = "NADA";
+  const product = await getProductById(productId);
+  // Obtengo el ID del product owner de este producto
+  const productOwnerId = product.owner;
+  // Con dicho ID busco el Role de ese usuario
+  const productOwnerRole = await getUserRole(productOwnerId);
+  let result = null;
+  // Verifico
+  // 1. Que los productos que pertenecen a un usuario premium sólo puedan ser borrados por dicho usuario o un admin.
+  // 2. Que los productos que pertenecen a un usuario user lo pueden borrar todos.
+  // 3. Que los productos que pertenecen a un usuario admin sólo lo pueda borrar un usuario admin.
+  if (
+    productOwnerRole == "premium" &&
+    (productOwnerId == userId || userRole === "admin")
+  ) {
+    result = deleteProduct(productId);
+  } else if (productOwnerRole == "user") {
+    result = deleteProduct(productId);
+  } else if (productOwnerRole == "admin" && userRole === "admin") {
+    result = deleteProduct(productId);
+  } else {
+    result = "You don't have right to delete this file";
+  }
   res.json({ status: "success", data: result });
 };
 

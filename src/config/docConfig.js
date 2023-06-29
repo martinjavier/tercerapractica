@@ -12,7 +12,7 @@ const swaggerOptions = {
       description: "Products API REST",
     },
   },
-  apis: [`${path.join(__dirname, "../docs/**/*.yaml")}`],
+  apis: [`${path.join(__dirname, "docs/**/*.yaml")}`],
 };
 
 export const swaggerSpecs = swaggerJsDoc(swaggerOptions);

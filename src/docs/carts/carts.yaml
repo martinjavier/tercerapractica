@@ -17,7 +17,7 @@ paths:
           description: lack of permissions error
         "500":
           description: internal server error
-  /api/carts/{pid}:
+  /api/carts/{cid}:
     get:
       summary: Get a cart by id
       tags:

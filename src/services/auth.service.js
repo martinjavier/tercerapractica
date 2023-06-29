@@ -71,7 +71,7 @@ export const login = async (req, res) => {
             role: user.role,
           },
           options.server.secretToken,
-          { expiresIn: "24h" }
+          { expiresIn: "1d" }
         );
         res
           .cookie(options.server.cookieToken, token, {

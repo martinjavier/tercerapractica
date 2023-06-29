@@ -117,12 +117,12 @@ export const deleteProductController = async (req, res) => {
   // 3. Que los productos que pertenecen a un usuario admin sólo lo pueda borrar un usuario admin.
   if (
     productOwnerRole == "premium" &&
-    (productOwnerId == userId || userRole === "admin")
+    (productOwnerId == userId || userRole == "admin")
   ) {
     result = deleteProduct(productId);
   } else if (productOwnerRole == "user") {
     result = deleteProduct(productId);
-  } else if (productOwnerRole == "admin" && userRole === "admin") {
+  } else if (productOwnerRole == "admin" && userRole == "admin") {
     result = deleteProduct(productId);
   } else {
     result = "You don't have right to delete this file";

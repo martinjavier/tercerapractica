@@ -20,6 +20,8 @@ import passport from "passport";
 import { initializedPassport } from "./config/passport.config.js";
 import cookieParser from "cookie-parser";
 import { checkRole } from "./middlewares/auth.js";
+import { swaggerSpecs } from "./config/docConfig.js";
+import swaggerUi from "swagger-ui-express";
 
 // SERVICE
 const messages = [];
@@ -66,6 +68,9 @@ app.use("/api/messages", checkRole(["user"]), messagesRouter);
 app.use("/api/sessions", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/tickets", ticketsRouter);
+
+// Definir donde podremos ver la documentación
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
 app.get("/niveles", (req, res) => {
   req.logger.silly("Nivel Silly");

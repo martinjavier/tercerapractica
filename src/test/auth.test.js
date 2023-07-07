@@ -5,6 +5,8 @@ import { createHash, isValidPassword } from "../utils.js";
 
 const expect = chai.expect;
 
+const requester = supertest("http://localhost:8080");
+
 describe("Authentication", () => {
   before(async function () {});
 

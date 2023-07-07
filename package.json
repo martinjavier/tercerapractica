@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "nodemon src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "testCarts": "mocha --exit --recursive --timeout 30000 src/test/carts.test.js",
+    "testProducts": "mocha --exit --recursive --timeout 30000 src/test/products.test.js",
+    "testAuth": "mocha --exit --recursive --timeout 30000 src/test/auth.test.js"
   },
   "repository": {
     "type": "git",
@@ -44,6 +46,9 @@
     "winston": "^3.9.0"
   },
   "devDependencies": {
-    "nodemon": "^1.14.9"
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "nodemon": "^1.14.9",
+    "supertest": "^6.3.3"
   }
 }
